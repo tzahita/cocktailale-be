@@ -6,6 +6,8 @@ const cors = require('cors')
 const app = express();
 const http = require('http').Server(app);
 const mongoose = require('mongoose');
+const db = require("./utils/dbConnect")
+
 
 db.connect()
 
