@@ -28,5 +28,5 @@ app.use('/api/cards', cards);
 app.get("/", (req,res) => {
   res.json("YAYYYYY")
 })
-// const port = 4000;
-// http.listen(port, () => console.log(`Listening on port ${port}...`));
+const port = 4000;
+http.listen(port, () => console.log(`Listening on port ${port}...`));
