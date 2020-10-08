@@ -31,7 +31,6 @@ router.post('/all', auth, async (req, res) => {
 });
 
 router.post('/cards/rcom', async (req, res) => {
-  console.log(req.body)
   let card = await Card.find({
       _id: { $ne:req.body.id }
     }).limit(4);
@@ -87,10 +86,12 @@ router.get('/favorite', auth, async (req, res) => {
 router.get('/card/:id', auth, async (req, res) => {
   const card = await Card.findOne({
     _id: req.params.id,
-    // user_id: req.user._id,
   });
+  const user = await User.findById(card.user_id);
+
+  card.user = user.name
   if (!card)
-    return res.status(404).send('The card with the given ID was not found.');
+  return res.status(404).send('The card with the given ID was not found.');
   res.send(card);
 });
 
@@ -122,7 +123,7 @@ router.post('/', auth, async (req, res) => {
       ? req.body.bizImage
       : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png',
     bizNumber: await generateBizNumber(Card),
-    updatedAt: Date.now() ,
+    updatedAt: Date.now(),
     user_id: req.user._id,
     popularity: 0,
   });

@@ -52,7 +52,13 @@ const cardSchema = new mongoose.Schema({
     type: Number,
     maxlength: 99999999999,
   },
-  user_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
+  user_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  user: {
+    type: String,
+    required: false,
+    minlength: 2,
+    maxlength: 255
+  },
 });
 
 const Card = mongoose.model('Card', cardSchema);
