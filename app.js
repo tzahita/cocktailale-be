@@ -7,16 +7,11 @@ const app = express();
 const http = require('http').Server(app);
 const mongoose = require('mongoose');
 const db = require("./utils/dbConnect")
+const dblh = require("./utils/dbConnectLocalHost")
 
 
-db.connect()
-
-// mongoose.connect('mongodb://localhost/my_rest_api', {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-//   useCreateIndex: true
-// }).then(() => console.log('Connected to MongoDB...'))
-//   .catch(err => console.error('Could not connect to MongoDB...'));
+// db.connect()
+dblh.connectLocalHost()
 
 app.use(cors())
 app.use(express.json());

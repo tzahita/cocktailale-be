@@ -1,6 +1,8 @@
 const express = require('express');
 const _ = require('lodash');
-const { Card, validateCard, generateBizNumber } = require('../models/card');
+var fp = require('lodash/fp');
+
+const { Card, validateCard, generateBizNumber ,trimFN, outputFN} = require('../models/card');
 const { User } = require('../models/user');
 const auth = require('../middleware/auth');
 const router = express.Router();
@@ -26,7 +28,7 @@ router.post('/all', auth, async (req, res) => {
   else{
      card = await Card.find().sort( { updatedAt: -1 } );
   }
- 
+
   res.send(card);
 });
 
@@ -110,12 +112,13 @@ router.get('/search/:name', auth, async (req, res) => {
 });
 
 router.post('/', auth, async (req, res) => {
+  // const transformDescription =  fp.pipe(trimFN,outputFN)
   const { error } = validateCard(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
   let card = new Card({
     bizName: req.body.bizName,
-    bizDescription: req.body.bizDescription,
+    bizDescription: transformDescription(req.body.bizDescription),
     bizAddress: req.body.bizAddress,
     bizPhone: req.body.bizPhone,
     bizIngredients: req.body.bizIngredients,
@@ -127,7 +130,6 @@ router.post('/', auth, async (req, res) => {
     user_id: req.user._id,
     popularity: 0,
   });
-
   post = await card.save();
   res.send(post);
 });

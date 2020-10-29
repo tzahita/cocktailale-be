@@ -79,6 +79,10 @@ function validateCard(card) {
   return schema.validate(card);
 }
 
+const outputFN = (tag='p') => (str) => `<${tag}>${str}</${tag}>`;
+const trimFN = (str='') => str.trim();
+
+
 async function generateBizNumber(Card) {
 
   while (true) {
@@ -92,3 +96,5 @@ async function generateBizNumber(Card) {
 exports.Card = Card;
 exports.validateCard = validateCard;
 exports.generateBizNumber = generateBizNumber;
+exports.outputFN = outputFN;
+exports.trimFN = trimFN;
