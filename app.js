@@ -10,8 +10,8 @@ const db = require("./utils/dbConnect")
 const dblh = require("./utils/dbConnectLocalHost")
 
 
-// db.connect()
-dblh.connectLocalHost()
+db.connect()
+// dblh.connectLocalHost()
 
 app.use(cors())
 app.use(express.json());
