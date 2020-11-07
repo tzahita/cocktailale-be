@@ -31,10 +31,6 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     required: true,
   },
-  image: {
-    type: Array,
-    required: true,
-  },
   createdAt: { type: Date, default: Date.now },
   cards: Array,
 });
@@ -53,7 +49,6 @@ function validateUser(user) {
     password: Joi.string().min(6).max(1024).required(),
     biz: Joi.boolean().required(),
     ClAdmin: Joi.boolean().required(),
-    image: Joi.array().required(),
   });
 
   return schema.validate(user);
