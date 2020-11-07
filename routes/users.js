@@ -12,15 +12,6 @@ const getCards = async (cardsArray) => {
 };
 
 router.get('/cards', auth, async (req, res) => {
-
-  // if (!req.query.numbers) res.status(400).send('Missing numbers data');
-
-  // let data = {};
-  // data.cards = req.query.numbers.split(",");
-
-  // const cards = await getCards(data.cards);
-  // res.send(cards);
- 
   const user = await User.findById(req.user._id);
   res.send(user.cards);
 });
@@ -95,11 +86,11 @@ router.post('/', async (req, res) => {
   let user = await User.findOne({ email: req.body.email });
   if (user) return res.status(400).send('User already registered.');
 
-  user = new User(_.pick(req.body, ['name', 'email', 'password', 'biz', 'cards']));
+  user = new User(_.pick(req.body, ['name', 'email', 'password', 'biz', 'cards', 'image']));
   const salt = await bcrypt.genSalt(10);
   user.password = await bcrypt.hash(user.password, salt);
   await user.save();
-  res.send(_.pick(user, ['_id', 'name', 'email']));
+  res.send(_.pick(user, ['_id', 'name', 'email', 'ClAdmin']));
 
 });
 
